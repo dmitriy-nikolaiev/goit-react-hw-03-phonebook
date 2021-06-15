@@ -13,11 +13,26 @@ class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const contacts = JSON.parse(localStorage.getItem('contacts'));
+
+    if (contacts) {
+      this.setState({ contacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   addContactHandler = (newContact) => {
     if (this.state.contacts.find((contact) => contact.name === newContact.name)) {
       alert(`${newContact.name} is already in contacts.`);
       return;
     }
+
     newContact.id = uuidv4();
     this.setState({ contacts: [...this.state.contacts, newContact] });
   };
