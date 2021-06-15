@@ -10,7 +10,7 @@ export class Filter extends Component {
           className="filter-input"
           name="name"
           value={this.props.filter}
-          onChange={this.props.handleChange}
+          onChange={this.props.filterHandler}
         />
       </label>
     );
@@ -19,5 +19,5 @@ export class Filter extends Component {
 
 Filter.propTypes = {
   filter: PropTypes.string,
-  handleChange: PropTypes.func,
+  filterHandler: PropTypes.func,
 };

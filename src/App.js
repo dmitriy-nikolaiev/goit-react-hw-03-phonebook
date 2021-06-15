@@ -13,19 +13,12 @@ class App extends Component {
     filter: '',
   };
 
-  addContactHandler = (event) => {
-    event.preventDefault();
-    const { name, number } = event.target.elements;
-    if (this.state.contacts.find((contact) => contact.name === name.value)) {
-      alert(`${name.value} is already in contacts.`);
+  addContactHandler = (newContact) => {
+    if (this.state.contacts.find((contact) => contact.name === newContact.name)) {
+      alert(`${newContact.name} is already in contacts.`);
       return;
     }
-    const newContact = {
-      id: uuidv4(),
-      name: name.value,
-      number: number.value,
-    };
-
+    newContact.id = uuidv4();
     this.setState({ contacts: [...this.state.contacts, newContact] });
   };
 
@@ -45,12 +38,8 @@ class App extends Component {
         <h1>Phonebook</h1>
         <ContactForm addContactHandler={this.addContactHandler} />
         <h2>Contacts</h2>
-        <Filter filter={this.state.filter} handleChange={this.filterHandler} />
-        <ContactList
-          contacts={this.state.contacts}
-          filter={this.state.filter}
-          deleteHandler={this.deleteHandler}
-        />
+        <Filter filter={this.state.filter} filterHandler={this.filterHandler} />
+        <ContactList {...this.state} deleteHandler={this.deleteHandler} />
       </div>
     );
   }
